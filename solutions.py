@@ -1,9 +1,7 @@
 import heapq
 from typing import List, Tuple
 
-# ─────────────────────────────────────────────
 # Problem 1: LRU Cache Implementation
-# ─────────────────────────────────────────────
 
 """
 LOGIC AND APPROACH:
@@ -70,9 +68,7 @@ class LRUCache:
             del self.cache[lru_node.key]
 
 
-# ─────────────────────────────────────────────
 # Problem 2: Event Scheduler
-# ─────────────────────────────────────────────
 
 """
 LOGIC AND APPROACH:
@@ -125,9 +121,7 @@ def min_rooms_required(events: List[Tuple[int, int]]) -> int:
     return len(rooms_heap)
 
 
-# ─────────────────────────────────────────────
 # Test Demonstrations
-# ─────────────────────────────────────────────
 
 if __name__ == "__main__":
     print("--- Problem 1: LRU Cache ---")
