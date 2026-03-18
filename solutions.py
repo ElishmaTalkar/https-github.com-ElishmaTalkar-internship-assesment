@@ -1,7 +1,9 @@
 import heapq
 from typing import List, Tuple
 
-# Problem 1: LRU Cache Implementation
+"""
+Problem 1: LRU Cache Implementation
+"""
 
 """
 LOGIC AND APPROACH:
@@ -27,19 +29,16 @@ class LRUCache:
     def __init__(self, capacity: int):
         self.capacity = capacity
         self.cache = {}
-        # Sentinel nodes to simplify boundary logic
         self.head = Node()
         self.tail = Node()
         self.head.next = self.tail
         self.tail.prev = self.head
 
     def _remove(self, node: Node):
-        """Removes a node from the doubly linked list."""
         node.prev.next = node.next
         node.next.prev = node.prev
 
     def _add_to_front(self, node: Node):
-        """Adds a node immediately after the head sentinel (MRU position)."""
         node.next = self.head.next
         node.prev = self.head
         self.head.next.prev = node
@@ -62,13 +61,14 @@ class LRUCache:
         self._add_to_front(new_node)
         
         if len(self.cache) > self.capacity:
-            # Evict the least recently used (node before tail sentinel)
             lru_node = self.tail.prev
             self._remove(lru_node)
             del self.cache[lru_node.key]
 
 
-# Problem 2: Event Scheduler
+"""
+Problem 2: Event Scheduler
+"""
 
 """
 LOGIC AND APPROACH:
@@ -92,11 +92,9 @@ def can_attend_all(events: List[Tuple[int, int]]) -> bool:
     if not events:
         return True
     
-    # Sort by start time
     sorted_events = sorted(events, key=lambda e: e[0])
     
     for i in range(1, len(sorted_events)):
-        # Overlap if current start < previous end (adjacent is OK)
         if sorted_events[i][0] < sorted_events[i - 1][1]:
             return False
     return True
@@ -105,14 +103,11 @@ def min_rooms_required(events: List[Tuple[int, int]]) -> int:
     if not events:
         return 0
     
-    # Sort events by start time
     sorted_events = sorted(events, key=lambda e: e[0])
     
-    # Min-heap to store meeting end times
     rooms_heap = []
     
     for start, end in sorted_events:
-        # If the earliest ending room is free, reuse it
         if rooms_heap and rooms_heap[0] <= start:
             heapq.heappop(rooms_heap)
             
@@ -121,20 +116,18 @@ def min_rooms_required(events: List[Tuple[int, int]]) -> int:
     return len(rooms_heap)
 
 
-# Test Demonstrations
-
 if __name__ == "__main__":
     print("--- Problem 1: LRU Cache ---")
     cache = LRUCache(2)
     cache.put(1, 10)
     cache.put(2, 20)
-    print(f"Get 1: {cache.get(1)}") # 10
-    cache.put(3, 30)                # Evicts 2
-    print(f"Get 2: {cache.get(2)}") # -1
+    print(f"Get 1: {cache.get(1)}")
+    cache.put(3, 30)
+    print(f"Get 2: {cache.get(2)}")
     
     print("\n--- Problem 2: Event Scheduler ---")
     test_events = [(9, 10), (10, 11), (11, 12)]
-    print(f"Can attend {test_events}: {can_attend_all(test_events)}") # True
+    print(f"Can attend {test_events}: {can_attend_all(test_events)}")
     
     room_test = [(9, 14), (9, 12), (10, 13), (12, 14)]
-    print(f"Min rooms for {room_test}: {min_rooms_required(room_test)}") # 3
+    print(f"Min rooms for {room_test}: {min_rooms_required(room_test)}")
